@@ -2,6 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>br.net.ops.fiscalize</groupId>
   <artifactId>fiscalize-java-normaliza</artifactId>
+  <packaging>jar</packaging>
   <version>1.0</version>
   <name>fiscalize-java-normaliza</name>
   
