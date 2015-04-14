@@ -133,12 +133,14 @@ public class NormalizaCotasParlamentares {
 				
 				lidos++;
 				
-				ultimoLog = imprimirLog(ultimoLog, "Normalizando Nota Fiscal: " + lidos);
+				ultimoLog = imprimirLog(ultimoLog, "Normalizando Nota Fiscal (Objeto Java): " + lidos);
 				
 			} catch(ExceptionBase e) {
 				logger.log(Level.WARNING, "Continuando a carga... (" + lidos + ")");
 			}
 		}
+		
+		logger.log(Level.INFO, "Preparando para salvar " + lidos + " notas fiscais no banco de dados!");
 		
 		// Salvando objetos normalizados
 		for(NotaFiscal notaFiscal:notasFiscais) {
