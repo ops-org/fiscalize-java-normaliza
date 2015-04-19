@@ -1,6 +1,7 @@
 package br.net.ops.fiscalize.business;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -147,6 +148,7 @@ public class NormalizaCotasParlamentares {
 			try {
 				List<NotaFiscal> notasExistentes = notaFiscalDao.findByExample(notaFiscal);
 				if(notasExistentes.size()==0) {
+					notaFiscal.setDataInclusao(new Date(System.currentTimeMillis()));
 					notaFiscalDao.save(notaFiscal);
 					validos++;
 					ultimoLog = imprimirLog(ultimoLog, "Salvando em Banco Nota Fiscal: " + iteracao);
