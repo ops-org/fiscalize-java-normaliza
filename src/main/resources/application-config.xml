@@ -18,7 +18,7 @@
     <!-- DATA SOURCE -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
         p:driverClassName="com.mysql.jdbc.Driver" 
-        p:url="jdbc:mysql://localhost:3306/fiscalize"
+        p:url="jdbc:mysql://localhost:3306/fiscalize?transformedBitIsBoolean=true"
         p:username="fiscalize"
         p:password="fiscalize"
         />
