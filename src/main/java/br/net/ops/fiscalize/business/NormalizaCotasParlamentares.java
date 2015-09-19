@@ -130,7 +130,9 @@ public class NormalizaCotasParlamentares {
 					}
 				}
 				
-				notasFiscais.add(notaFiscal);
+				if(notaFiscal.getValor().intValue()>=0) {
+					notasFiscais.add(notaFiscal);
+				} // else: notas com valor < 0 são créditos, não reembolso.
 				
 				lidos++;
 				
