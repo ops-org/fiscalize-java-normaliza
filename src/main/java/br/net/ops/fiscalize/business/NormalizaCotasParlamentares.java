@@ -131,8 +131,10 @@ public class NormalizaCotasParlamentares {
 				}
 				
 				if(notaFiscal.getValor().intValue()>=0) {
-					notasFiscais.add(notaFiscal);
-				} // else: notas com valor < 0 são créditos, não reembolso.
+					if(isLegislaturaAtual(notaFiscal.getAno(), notaFiscal.getMes())) {
+						notasFiscais.add(notaFiscal);	
+					}
+				} // else: notas com valor < 0 sao creditos, nao reembolso. Nao devem ser inseridas!
 				
 				lidos++;
 				
@@ -170,6 +172,18 @@ public class NormalizaCotasParlamentares {
 		
 		return notasFiscais;
 		
+	}
+	
+	// 01/02/2015 a 31/01/2019 - Garantir apenas esta legislatura
+	private boolean isLegislaturaAtual(int ano, int mes) {
+		boolean retorno = true;
+		if(ano<2015 || (ano==2015 && mes<2)) { // se menor que 02/2015
+			retorno = false;
+		}
+		if(ano>2019 || (ano==2019 && mes>1)) { // se maior que 01/2019 
+			retorno = false;
+		}
+		return retorno;
 	}
 	
 	private long imprimirLog(long ultimoLog, String mensagem) {
