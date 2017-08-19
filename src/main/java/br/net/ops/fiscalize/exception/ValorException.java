@@ -5,7 +5,7 @@ import java.util.logging.Level;
 @SuppressWarnings("serial")
 public class ValorException extends ExceptionBase {
 
-	private static final String MENSAGEM = "Problemas ao resgatar a coluna Valor Glosa (vlrGlosa)!";
+	private static final String MENSAGEM = "Problemas ao resgatar a coluna Valor (vlrDocumento)!";
 	
 	public ValorException() {
 		super(MENSAGEM);
