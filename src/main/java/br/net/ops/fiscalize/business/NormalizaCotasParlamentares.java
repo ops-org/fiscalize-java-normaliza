@@ -103,9 +103,9 @@ public class NormalizaCotasParlamentares {
 				notaFiscal.setNumeroDocumento(despesa.getTxtNumero());
 				notaFiscal.setNomePassageiro(despesa.getTxtPassageiro());
 				notaFiscal.setTrechoViagem(despesa.getTxtTrecho());
-				notaFiscal.setValor(NotaFiscal.retornarValor(despesa.getVlrDocumento()));
-				notaFiscal.setValor(NotaFiscal.retornarValorGlosa(despesa.getVlrGlosa()));
-				notaFiscal.setValor(NotaFiscal.retornarValorLiquido(despesa.getVlrLiquido()));
+				notaFiscal.setValor(NotaFiscal.retornarValor(despesa.getVlrDocumento().replace(",", ".")));
+				notaFiscal.setValor(NotaFiscal.retornarValorGlosa(despesa.getVlrGlosa().replace(",", ".")));
+				notaFiscal.setValor(NotaFiscal.retornarValorLiquido(despesa.getVlrLiquido().replace(",", ".")));
 				
 				for(Uf uf:ufs) {
 					if(uf.getSigla().equalsIgnoreCase(Uf.retornarUfNotNull(despesa.getSgUF()))) {
