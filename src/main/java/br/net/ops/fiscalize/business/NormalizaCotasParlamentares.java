@@ -99,7 +99,7 @@ public class NormalizaCotasParlamentares {
                 notaFiscal.setCpfCnpj(despesa.getTxtCNPJCPF());
                 notaFiscal.setDescricao(despesa.getTxtDescricao());
                 notaFiscal.setDescricaoSubCota(despesa.getTxtDescricaoEspecificacao());
-                notaFiscal.setBeneficiario(despesa.getTxtBeneficiario());
+                notaFiscal.setBeneficiario(despesa.getTxtFornecedor());
                 notaFiscal.setNumeroDocumento(despesa.getTxtNumero());
                 notaFiscal.setNomePassageiro(despesa.getTxtPassageiro());
                 notaFiscal.setTrechoViagem(despesa.getTxtTrecho());
