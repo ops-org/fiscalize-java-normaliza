@@ -1,5 +1,15 @@
 package br.net.ops.fiscalize.business;
 
+import br.net.ops.fiscalize.dao.ParlamentarDao;
+import br.net.ops.fiscalize.dao.PartidoDao;
+import br.net.ops.fiscalize.domain.Parlamentar;
+import br.net.ops.fiscalize.domain.Partido;
+import br.net.ops.fiscalize.util.Utilidade;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -7,22 +17,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import br.net.ops.fiscalize.dao.ParlamentarDao;
-import br.net.ops.fiscalize.dao.PartidoDao;
-import br.net.ops.fiscalize.domain.Parlamentar;
-import br.net.ops.fiscalize.domain.Partido;
-import br.net.ops.fiscalize.util.Utilidade;
-
 @Component
 public class SalvarImagens {
 
-    private static final String URL_PARLAMENTAR = "http://www.camara.gov.br/internet/deputado/bandep/";
-    private static final String URL_PARTIDO = "http://www.camara.leg.br/Internet/Deputado/img/partidos/";
+    private static final String URL_PARLAMENTAR = "https://www.camara.gov.br/internet/deputado/bandep/";
+    private static final String URL_PARTIDO = "https://www.camara.leg.br/Internet/Deputado/img/partidos/";
 
     private static final String EXTENSAO_PARLAMENTAR = ".jpg";
     private static final String EXTENSAO_PARTIDO = ".gif";
@@ -155,6 +154,5 @@ public class SalvarImagens {
         logger.log(Level.INFO, "Parlamentar sem imagem: " + semImagem);
 
     }
-
 
 }

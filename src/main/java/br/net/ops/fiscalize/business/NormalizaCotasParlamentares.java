@@ -1,16 +1,5 @@
 package br.net.ops.fiscalize.business;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.hibernate.HibernateException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import br.net.ops.fiscalize.dao.CotaDao;
 import br.net.ops.fiscalize.dao.DespesaDao;
 import br.net.ops.fiscalize.dao.NotaFiscalDao;
@@ -25,6 +14,16 @@ import br.net.ops.fiscalize.domain.Partido;
 import br.net.ops.fiscalize.domain.Uf;
 import br.net.ops.fiscalize.exception.ExceptionBase;
 import br.net.ops.fiscalize.util.Utilidade;
+import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class NormalizaCotasParlamentares {
@@ -91,40 +90,41 @@ public class NormalizaCotasParlamentares {
             NotaFiscal notaFiscal = new NotaFiscal();
 
             try {
-                notaFiscal.setDataEmissao(NotaFiscal.retornarDataEmissao(despesa.getDatEmissao()));
-                notaFiscal.setTipoDocumentoFiscal(NotaFiscal.retornarTipoDocumento(despesa.getIndTipoDocumento()));
-                notaFiscal.setAno(NotaFiscal.retornarAno(despesa.getNumAno()));
-                notaFiscal.setMes(NotaFiscal.retornarMes(despesa.getNumMes()));
-                notaFiscal.setParcela(NotaFiscal.retornarParcela(despesa.getNumParcela()));
-                notaFiscal.setCpfCnpj(despesa.getTxtCNPJCPF());
-                notaFiscal.setDescricao(despesa.getTxtDescricao());
-                notaFiscal.setDescricaoSubCota(despesa.getTxtDescricaoEspecificacao());
-                notaFiscal.setBeneficiario(despesa.getTxtFornecedor());
-                notaFiscal.setNumeroDocumento(despesa.getTxtNumero());
-                notaFiscal.setNomePassageiro(despesa.getTxtPassageiro());
-                notaFiscal.setTrechoViagem(despesa.getTxtTrecho());
-                notaFiscal.setValor(NotaFiscal.retornarValor(despesa.getVlrDocumento().replace(",", ".")));
-                notaFiscal.setValor(NotaFiscal.retornarValorGlosa(despesa.getVlrGlosa().replace(",", ".")));
-                notaFiscal.setValor(NotaFiscal.retornarValorLiquido(despesa.getVlrLiquido().replace(",", ".")));
+                notaFiscal.setDataEmissao(NotaFiscal.retornarDataEmissao(despesa.getDataEmissao()));
+                notaFiscal.setTipoDocumentoFiscal(NotaFiscal.retornarTipoDocumento(despesa.getTipoDocumento()));
+                notaFiscal.setAno(NotaFiscal.retornarAno(despesa.getAno()));
+                notaFiscal.setMes(NotaFiscal.retornarMes(despesa.getMes()));
+                notaFiscal.setParcela(NotaFiscal.retornarParcela(despesa.getParcela()));
+                notaFiscal.setCpfCnpj(despesa.getCnpjCPF());
+                notaFiscal.setDescricao(despesa.getDescricao());
+                notaFiscal.setDescricaoSubCota(despesa.getDescricaoEspecificacao());
+                notaFiscal.setBeneficiario(despesa.getFornecedor());
+                notaFiscal.setNumeroDocumento(despesa.getNumero());
+                notaFiscal.setNomePassageiro(despesa.getPassageiro());
+                notaFiscal.setTrechoViagem(despesa.getTrecho());
+                notaFiscal.setValor(NotaFiscal.retornarValor(despesa.getValorDocumento().replace(",", ".")));
+                notaFiscal.setValor(NotaFiscal.retornarValorGlosa(despesa.getValorGlosa().replace(",", ".")));
+                notaFiscal.setValor(NotaFiscal.retornarValorLiquido(despesa.getValorLiquido().replace(",", ".")));
 
                 for (Uf uf : ufs) {
-                    if (uf.getSigla().equalsIgnoreCase(Uf.retornarUfNotNull(despesa.getSgUF()))) {
+                    if (uf.getSigla().equalsIgnoreCase(Uf.retornarUfNotNull(despesa.getSiglaUF()))) {
                         notaFiscal.setUf(uf);
                         break;
                     }
                 }
 
                 for (Parlamentar parlamentar : parlamentares) {
-                    if (parlamentar.getNome().equalsIgnoreCase(despesa.getTxNomeParlamentar())) {
-                        if (parlamentar.getPartido().getSigla().equalsIgnoreCase(Partido.retornarPartidoNotNull(despesa.getSgPartido()))) {
+                    if (parlamentar.getNome().equalsIgnoreCase(despesa.getNomeParlamentar())) {
+                        if (parlamentar.getPartido().getSigla().equalsIgnoreCase(Partido.retornarPartidoNotNull(despesa.getSiglaPartido()))) {
                             notaFiscal.setParlamentar(parlamentar);
+                            break;
                         }
-                        break;
+
                     }
                 }
 
                 for (Cota cota : cotas) {
-                    if (cota.getNome().equalsIgnoreCase(despesa.getTxtDescricao())) {
+                    if (cota.getNome().equalsIgnoreCase(despesa.getDescricao())) {
                         notaFiscal.setCota(cota);
                         break;
                     }
@@ -369,11 +369,8 @@ public class NormalizaCotasParlamentares {
         // Salvando objetos normalizados
         for (Parlamentar parlamentar : parlamentares) {
             try {
-                List<Parlamentar> parlamentaresExistentes = parlamentarDao.findByExample(parlamentar);
-                if (parlamentaresExistentes.size() == 0) {
-                    parlamentarDao.save(parlamentar);
-                    validos++;
-                }
+                parlamentarDao.save(parlamentar);
+                validos++;
                 iteracao++;
             } catch (HibernateException e) {
                 logger.log(Level.SEVERE, "Problemas ao salvar parlamentar (iteracao: " + iteracao + ") - " + e.getMessage());
