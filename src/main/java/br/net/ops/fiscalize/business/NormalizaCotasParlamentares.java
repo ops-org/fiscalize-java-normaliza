@@ -131,9 +131,9 @@ public class NormalizaCotasParlamentares {
                 }
 
                 if (notaFiscal.getValor().intValue() >= 0) {
-                    if (isLegislaturaAtual(notaFiscal.getAno(), notaFiscal.getMes())) {
+                    // if (isLegislaturaAtual(notaFiscal.getAno(), notaFiscal.getMes())) { o arquivo só tem a legislatura que queremos
                         notasFiscais.add(notaFiscal);
-                    }
+                    // }
                 } // else: notas com valor < 0 sao creditos, nao reembolso. Nao devem ser inseridas!
 
                 lidos++;
