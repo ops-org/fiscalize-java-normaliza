@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 @Component
 public class SalvarImagens {
 
-    private static final String URL_PARLAMENTAR = "https://www.camara.gov.br/internet/deputado/bandep/";
+    private static final String URL_PARLAMENTAR = "https://www.camara.leg.br/internet/deputado/bandep/";
     private static final String URL_PARTIDO = "https://www.camara.leg.br/Internet/Deputado/img/partidos/";
 
     private static final String EXTENSAO_PARLAMENTAR = ".jpg";
